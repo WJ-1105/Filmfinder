@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/css/medile.css" rel='stylesheet' type='text/css' />
+<link href="/static/css/detail.css" rel='stylesheet' type='text/css' />
+<link rel="stylesheet" type="text/css" href="/static/css/index.css">
+<style>
+
+html, body, div,h1, h2, h3,
+a,center{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+.container {
+	max-width: 1100px;
+	height: auto;
+	margin: 60px auto;
+}
+
+.hero {
+	margin: 50px auto;
+	position: relative;
+}
+
+h1.name {
+	font-size: 70px;
+	font-weight: 300;
+	display: inline-block;
+}
+
+
+
+.sections {
+	vertical-align: top;
+	display: inline-block;
+	width: 49.7%;
+	height: 50px;
+}
+
+.section-title {
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 15px;
+}
+
+.list-card {
+	margin: 30px 0;
+}
+
+.list-card .exp , .list-card div{
+	display: inline-block;
+	vertical-align: top;
+}
+
+.list-card .exp {
+	margin-right: 15px;
+	color: #4A90E2;
+	font-weight: 600;
+	width: 100px;
+}
+
+.list-card div {
+	width: 70%;
+}
+
+.list-card h3 {
+	font-size: 20px;
+	font-weight: 600;
+	color: #5B6A9A;
+	line-height: 26px;
+	margin-bottom: 8px;
+}
+
+.list-card div span {
+	font-size: 16px;
+	color: #81899C;
+	line-height: 22px;
+}
+.profile {
+    position: absolute;
+    top:18px;
+    right:140px;
+}
+
+</style>
+
+
+
+</head>
+<body>
+	<div class="header">
+		<div class="container">
+			<div class="w3layouts_logo">
+				<a href="/homelogin/{{current_user}}"><h1>FilmFinder</h1></a>
+			</div>
+            <div class="w3l_sign_in_register">
+                <a href="/people/{{current_user}}"><input class="profile" type="button" value="My profile" style="color: orange; position: absolute; top: 2%; right: 5%;"></a>
+            </div>
+            <div class="logout">
+                <form method="POST" action = '{% url 'logout_page' %}'>
+                    {% csrf_token %}
+                    <button class="logout" id="submit" style="color: orange; position: absolute; top: 2%; right: 2%;">Logout</button>
+                </form>
+            </div>
+			<div class="clearfix"> </div>
+		</div>
+    </div>
+
+<div class="container">
+	<div class="agileits-single-top">
+		<ol class="breadcrumb">
+		  <li><a href="/homelogin/{{current_user}}">Home</a></li>
+		  <li class="active">Profile</li>
+		</ol>
+	</div>
+	<div class="hero">
+		<h1 class="name">{{ profile_user }}</h1>
+<!-- 		<span class="job-title">Developer</span>
+
+		<span class="email">XXX</span>
+ -->
+        {% if check_if_own_profile == 0 %}
+
+            <form  method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="ban_user" value= {{ profile_user_id }}  >
+
+                {% if check_already_banned == 0 %}
+                <button id="submit1" style="color: orange;">Add to banned list</button>
+                {% elif check_already_banned == 1 %}
+                <button id="submit2" style="color: orange;">Remove from banned list</button>
+                {% endif %}
+
+            </form>
+
+        {% endif %}
+
+<!-- 		<h2 class="lead">Development and design of web applications
+for startups and large companies</h2> -->
+	</div>
+</div>
+
+<!-- Skills and intrest section -->
+<div class="container">
+
+	<div class="sections">
+		<h2 class="section-title">Wish List</h2>
+        {% for wish in wish %}
+		<div class="list-card">
+<!-- 			<span class="exp">+ 5 years</span>
+ -->			<div>
+				<h3>{{ wish.movie_name}}</h3>
+{#				<span>Description ........... </span>#}
+			</div>
+		</div>
+
+        {% endfor %}
+
+	</div>
+
+    {% if check_if_own_profile == 1 %}
+	<div class="sections">
+			<h2 class="section-title">Banned List</h2>
+
+            {% for each_user in profile_user_ban_list %}
+			<div class="list-card">
+				<div>
+                    <h3> <a href="/people/{{each_user}}">{{ each_user}}</a></h3>
+{#                    <a href="/people/{{review.user_name}}">{{ each_user}}</a>#}
+{#					<h3>{{ each_user}}</h3>#}
+<!-- 					<span>PHP, JS, Bash, Python</span>
+ -->				</div>
+			</div>
+            {% endfor %}
+
+
+	</div>
+    {% endif %}
+</div>
+
+
+</body>
+</html>

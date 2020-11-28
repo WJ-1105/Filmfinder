@@ -1,0 +1,60 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
+    <style>
+        .form {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            background: #fff;
+            width: 285px;
+            margin: -140px 0 0 -182px;
+            padding: 40px;
+        }
+        .form input {
+            outline: none;
+            display: block;
+            width: 100%;
+            margin: 0 0 20px;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            color: #ccc;
+            font-family: "Roboto";
+            box-sizing: border-box;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        .form button {
+            cursor: pointer;
+            background: orange;
+            width: 100%;
+            padding: 10px 15px;
+            border: 0;
+            color: #fff;
+            font-family: "Roboto";
+            font-size: 14px;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<section class="form animated flipInX">
+    <h1>FilmFinder</h1>
+    <h2 style="margin: 0 0 20px;
+    line-height: 1;
+    color: orange;
+    font-size: 18px;
+    font-weight: 400">Create your account</h2>
+    <form class="loginbox", method="POST",action = '{% url 'signup_page' %}'>
+        {% csrf_token %}
+        <div style="background:#000; color:red"> {{ error }} </div>
+        <input placeholder="Username" type="text" name="username"></input>
+        <input placeholder="Password" type="password" name="password"></input>
+        <div style="background:#000; color:red"> {{ password_different }} </div>
+        <input placeholder="Confirmed Password" type="password" name="password2"></input>
+{#        <input class = 'btn btn-primary' , type = 'submit' , value="Register">#}
+        <button id="submit">Register</button>
+    </form>
+</section>
+</html>

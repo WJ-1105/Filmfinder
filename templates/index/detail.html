@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<title>Detail</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="One Movies Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<!-- //for-mobile-apps -->
+<link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/css/medile.css" rel='stylesheet' type='text/css' />
+<link href="/static/css/detail.css" rel='stylesheet' type='text/css' />
+<!-- js -->
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/static/css/index.css">
+<style >
+ 
+ .kbb,.dl,.hz,.gz{width:300px;margin-left: 220px;margin-top: 20px;}
+</style>
+
+</head>
+	
+<body>
+<!-- header -->
+	<div class="header">
+		<div class="container">
+			<div class="w3layouts_logo">
+				<a href="/homelogin/{{current_user}}"><h1>FilmFinder</h1></a>
+			</div>
+			
+            <div class="w3l_sign_in_register">
+                <a href="/people/{{current_user}}"><input class="profile" type="button" value="My profile" style="color: orange; position: absolute; top: 2%; right: 7%;"></a>
+            </div>
+            <div class="logout">
+                <form method="POST" action = '{% url 'logout_page' %}'>
+                    {% csrf_token %}
+                    <button class="logout" id="submit" style="color: orange; position: absolute; top: 2%; right: 2%;">Logout</button>
+                </form>
+            </div>
+			<div class="clearfix"> </div>
+		</div>
+    </div>
+
+<!-- single -->
+<div class="single-page-agile-main">
+<div class="container">
+		<!-- /w3l-medile-movies-grids -->
+			<div class="agileits-single-top">
+				<ol class="breadcrumb">
+				  <li><a href="/homelogin/{{current_user}}">Home</a></li>
+				  <li class="active">{{ movie.name }}</li>
+				</ol>
+			</div>
+			<div class="single-page-agile-info">
+                   <!-- /movie-browse-agile -->
+                           <div class="show-top-grids-w3lagile">
+				<div class="col-sm-8 single-left">
+					<div class="song">
+						<div class="song-info">
+							<h3>{{ movie.name }}</h3>	
+					    </div>
+						<div class="video-grid-single-page-agileits">
+							<img alt="" src="{{ movie.movie_image.url}}", width: 140px;height: 200px; style="display: inline-block;" />
+						</div>
+                    </div>
+                    <div class="wishList" style="color: orange;">
+
+                        <form  method="POST">
+                        {% csrf_token %}
+    
+                        <input type="hidden" name="wish_movie" value= {{ movie.id }}  >
+    
+                        {% if already_wished == 0 %}
+                        <button id="submit1">Add to Wish list</button>
+                        {% elif already_wished == 1 %}
+                        <button id="submit2">Remove from Wish list</button>
+                        {% endif %}
+    
+                        </form>
+                    </div>
+					<div class="song-grid-right">
+						<div class="share">
+                            <li>Description: {{ movie.description }}</li>
+                            <li>Genre: {{ movie.genre }}</li>
+							<li>Cast: {{ movie.cast }}</li>
+							{% for rate in rates  %}
+							<li>Average rating: {{ rate.rate }}</li>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+
+					<div class="all-comments">
+						<div class="all-comments-info">
+							<a href="#">Leave a review</a>
+							<div class="agile-info-wthree-box">
+                                <form method="POST", enctype="multipart/form-data">
+                                    {% csrf_token %}
+									<input type="number" name="rating" placeholder="Your rate" required="">			           					   
+                                    <textarea name="review" placeholder="Your comment" required=""></textarea>
+                                    <input type="submit" value="Submit">
+									<div class="clearfix"> </div>
+                                </form>
+                                <div style="background:#000; color:red"> {{ review_error }} </div>
+                                <div style="background:#000; color:green"> {{ review_success }} </div>
+							</div>
+						</div>
+						<div class="media-grids">
+							<div class="media">
+								{% for review in review  %}
+								<hr/>
+                                <h5><a href="/people/{{review.user_name}}" style="color: black;">User:{{ review.user_name  }}</a></h5>
+								<div class="media-body">
+									<p>{{ review.review_detail }}</p>
+									<span><a href="#">Rate:{{ review.rate }}</a></span>
+                                </div>
+                                {% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 single-right">
+        <h3>Some popular movie:</h3>
+     <div class="single-grid-right">
+
+      <div class="single-right-grids">
+                            {% for movie in some_popular_movie  %}
+       <div class="col-md-4 single-right-grid-left">
+        
+        <a href=" "><img alt="" src="{{ movie.movie_image.url}}", width: 140px;height: 200px; style="display: inline-block;" />
+       
+       </div>
+       <div class="col-md-8 single-right-grid-right">
+        <a href="/movie/{{movie.id}}" class="title"> {{movie.name }}</a >
+       </div>
+                            <div class="clearfix"> </div>
+                            {% endfor %}
+                        </div>
+                        
+     </div>
+    </div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<div class='kbb'>
+    Movie you may like:
+
+            <div class='Choices_movie'>
+          <div class='Choices_radio'>
+            <label><input type='radio' name='Choices_mover' value='1' checked>Same Genre</label>
+            <label><input type='radio' name='Choices_mover' value='2'>Same Director</label>
+<!--             <label><input type='radio' name='Choices_mover' value='3'>??????????</label>
+ -->          </div>
+          <div class='zaix'>????????</div>
+          <div class='Choices_list'>
+          <div class='Choices_list_hot'>
+
+              {% for movie in reviewed_same_genre  %}
+            <div class='Choices_list_box'>
+              <div class='Choices_list_img'>
+                <img alt="" src="{{ movie.movie_image.url}}", width: 140px;height: 200px; style="display: inline-block;" />
+              </div>
+              <div class='Choices_list_name'>
+                  <a href=" ">{{ movie.name }}</a >
+              </div>
+            </div>
+              {% endfor %}
+
+
+          </div>
+          <!-- 'Choices_list_time -->
+          {% for movie in reviewed_same_director  %}
+          <div class='Choices_list_time'>
+            <div class='Choices_list_box'>
+              <div class='Choices_list_img'>
+                <img alt="" src="{{ movie.movie_image.url}}", width: 140px;height: 200px; style="display: inline-block;" />
+              </div>
+              <div class='Choices_list_name'>
+                  <a href="/movie/{{movie.id}}">{{ movie.name }}</a >
+              </div>
+            </div>
+        {% endfor %}
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+	
+	
+	
+	
+	
+	
+	<script type="text/javascript" src='/static/js/jquery-3.1.1.min.js'></script>
+<script type="text/javascript" src='/static/js/index.js'></script>
+<script type="text/javascript" src='/static/js/index2.js'></script>
+	
+	
+</body>
+</html>

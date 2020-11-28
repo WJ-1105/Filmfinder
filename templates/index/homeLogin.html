@@ -1,0 +1,140 @@
+<html>
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FilmFinder</title>
+    <link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/static/css/medile.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/detail.css" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+
+</head>
+
+
+<body>
+    <div class="header">
+		<div class="container">
+			<div class="w3layouts_logo">
+				<a href="/homelogin/{{you}}"><h1>FilmFinder</h1></a>
+			</div>
+			<div class="w3_search">
+				<form action="#" method="POST">
+                    {% csrf_token %}
+                    <input type="text" placeholder="Search Movies, Genre, Director, Description" name="search_input">
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+            {#    {% if search_state == 0 %}#}
+            
+            <div class="w3l_sign_in_register">
+                <a href="/people/{{you}}"><input class="profile" type="button" value="My profile" style="color: orange; position: absolute; top: 2%; right: 7%;"></a>
+            </div>
+            <div class="logout">
+                <form method="POST" action = '{% url 'logout_page' %}'>
+                    {% csrf_token %}
+                    <button class="logout" id="submit" style="color: orange; position: absolute; top: 2%; right: 2%;">Logout</button>
+                </form>
+            </div>
+            <div class="clearfix"> </div>
+            <div style="font-size: large; text-align: center;">Welcome {{ you.username }}</div>
+            <div class="agileits-single-top">
+                <ol class="breadcrumb">
+                  <li><a href="/homelogin/{{you}}">Home</a></li>
+                  <li class="active"></li>
+                </ol>
+            </div>
+		</div>
+    </div>
+
+    
+<div class='outer_box'>
+    <div class='auto_box'>
+      <div class='FilmCritic'>
+        <div class='FC_head'>
+        </div>
+        <div style= "color:red"> {{ error }} </div>
+
+              {% for each_array in movie_list_array  %}
+            <div class='FC_list'>
+          <div class='FC_box'>
+
+                    {% for ob in  each_array%}
+                    {% if forloop.counter == 1 %}
+                            <div class='FC_img'>
+                        <img src="{{ ob.movie_image.url }} ">
+                        </div>
+                    {% endif %}
+                   {% endfor %}
+
+
+            <div class='FC_con'>
+               <div class='FC_con_tit'>
+
+                   {% for ob in  each_array%}
+                    {% if forloop.counter == 1 %}
+                    <a href="/movie/{{ob.id}}">{{ ob.name}}</a>
+                    {% endif %} 
+                   {% endfor %}
+
+               </div>
+               <div class='FC_con_aut'>
+
+                  {% for ob in  each_array%}
+                    {% if forloop.counter == 1 %}
+                    <a href="javascript:;">{{ ob.description }}</a>
+                    {% endif %}
+                   {% endfor %}
+
+
+                   <br/>
+                    Rate :{% for ob in  each_array%}
+                    {% if forloop.counter == 2 %}
+                    <a href="javascript:;">{{ ob}}</a>
+                    {% endif %}
+                   {% endfor %}
+
+                    {% for ob in  each_array%}
+                    {% if forloop.counter == 3 %}
+                    <i class='star_icon star_{{ ob  }}'></i>
+                    {% endif %}
+                   {% endfor %}
+
+               <p>
+
+                   Genre: {% for ob in  each_array%}
+                    {% if forloop.counter == 1 %}
+                    <a href="javascript:;">{{ ob.genre }}</a>
+                    {% endif %}
+                   {% endfor %} <br/>
+                   Director:                  {% for ob in  each_array%}
+                    {% if forloop.counter == 1 %}
+                    <a href="javascript:;">{{ ob.director_name }}</a>
+                    {% endif %}
+                   {% endfor %}
+
+               </p>
+
+               </div>
+            </div>
+          </div>
+          {% endfor %}
+
+
+
+
+      </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript" src='/static/js/jquery-3.1.1.min.js'></script>
+<script type="text/javascript" src='/static/js/index.js'></script>
+<script type="text/javascript" src='/static/js/index2.js'></script>
+</body>
+
+
+</html>
