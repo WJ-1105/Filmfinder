@@ -1,5 +1,3 @@
-# capstone-project-comp3900-h17a-software-chasers
-capstone-project-comp3900-h17a-software-chasers created by GitHub Classroom
 
 The steps to build, setup, configure, and use your system and functionalities. 
 
@@ -9,24 +7,18 @@ The steps to build, setup, configure, and use your system and functionalities.
 2. Download Django:
 pip install django==3.1.3
 
-3. Set virtual environment:
-pyvenv tutorial-env
+3. Enter into the project file.
 
-4. Activate the virtual environment:
-source tutorial-env/bin/activate
-
-5. Enter into the project file.
-
-6. Migrate database once changing environment/database by using:
+4. Migrate database once changing environment/database by using:
 python manage.py makemigrations 
 python manage.py migrate
 
-7. Run server and access into film finder website by using this command:
+5. Run server and access into film finder website by using this command:
 python manage.py runserver
 
-8. Go to a browser (recommend to use google chrome if available) and enter the address http://127.0.0.1:8000/ (If a different port is used, change 8000 to correct corresponding port number, the default port is 8000).
+6. Go to a browser (recommend to use google chrome if available) and enter the address http://127.0.0.1:8000/ (If a different port is used, change 8000 to correct corresponding port number, the default port is 8000).
 
-9. There are two methods to add movie items in database:
+7. There are two methods to add movie items in database:
   <1>. Add movies by using python shell through terminal following the command below:
        python manage.py shell 
        from index.models import *
